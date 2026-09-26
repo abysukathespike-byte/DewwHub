@@ -746,6 +746,7 @@ function toast(msg, type='success'){
 }
 
 function closeMo(id){ const m = document.getElementById(id); if(m) m.classList.remove('active'); }
+function bringToFront(el){ if(el) document.body.appendChild(el); }
 
 function api(path, opts){
   opts = opts || {};
@@ -837,7 +838,9 @@ function loadAboutPeople(){
    ============================================================ */
 function openAuth(t){
   switchTab(t);
-  document.getElementById('auth-mo').classList.add('active');
+  const m = document.getElementById('auth-mo');
+  bringToFront(m);
+  m.classList.add('active');
 }
 
 function switchTab(t){
@@ -1307,7 +1310,9 @@ function openUpload(){
     l.onclick = () => l.classList.toggle('checked');
     el.appendChild(l);
   });
-  document.getElementById('upload-mo').classList.add('active');
+  const upMo = document.getElementById('upload-mo');
+  bringToFront(upMo);
+  upMo.classList.add('active');
 }
 
 function prevUp(i){
@@ -1682,6 +1687,7 @@ function confirm2(msg, opt){
   opt = opt || {};
   return new Promise(r => {
     const m = document.getElementById('gen-mo');
+    bringToFront(m);
     m.innerHTML = '<div class="mc"><div class="mh"><h3 class="mt"><i class="fas fa-triangle-exclamation"></i> ' + esc(opt.title||'Konfirmasi') + '</h3></div><p class="mb">' + esc(msg) + '</p><div class="ma"><button class="neu-btn" id="cf-no" style="flex:1">Batal</button><button class="neu-btn ' + (opt.danger?'danger':'primary') + '" id="cf-ok" style="flex:1">' + esc(opt.ok||'Ya') + '</button></div></div>';
     m.classList.add('active');
     document.getElementById('cf-no').onclick = () => { m.classList.remove('active'); r(false); };
@@ -1692,6 +1698,7 @@ function confirm2(msg, opt){
 function prompt2(t, ph){
   return new Promise(r => {
     const m = document.getElementById('gen-mo');
+    bringToFront(m);
     m.innerHTML = '<div class="mc"><div class="mh"><h3 class="mt"><i class="fas fa-pen"></i> ' + esc(t) + '</h3><button class="mx" id="pm-x"><i class="fas fa-xmark"></i></button></div><div class="fg"><textarea id="pm-i" placeholder="' + esc(ph||'') + '" style="min-height:90px"></textarea></div><div class="ma"><button class="neu-btn" id="pm-c" style="flex:1">Batal</button><button class="neu-btn primary" id="pm-o" style="flex:1">Kirim</button></div></div>';
     m.classList.add('active');
     const i = document.getElementById('pm-i');
